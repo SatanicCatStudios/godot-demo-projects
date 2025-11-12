@@ -1,6 +1,6 @@
 extends Node
 
-# Keep the number of samples per second to mix low, as GDScript is not super fast.
+# Keep the number of samples per second to mix low, as GDScript is not super fast. Changing for email commit test
 var sample_hz := 22050.0
 var pulse_hz1 := 440.0
 var pulse_hz3 := 440.0
