@@ -58,12 +58,28 @@ theme_override_colors/font_color = Color(0.466667, 0.882353, 1, 1)
 theme_override_font_sizes/font_size = 24
 text = "Generated Audio Frequency"
 
+[node name="RichTextLabel" type="RichTextLabel" parent="CenterContainer/FrequencyTitle"]
+layout_mode = 0
+offset_left = 329.0
+offset_top = 1.0
+offset_right = 496.0
+offset_bottom = 56.0
+text = "Harmonic Series Ratio Modifier"
+
 [node name="HarmonicLabel" type="Label" parent="CenterContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.466667, 0.882353, 1, 1)
 theme_override_font_sizes/font_size = 24
 label_settings = SubResource("LabelSettings_yybav")
+
+[node name="m" type="LineEdit" parent="CenterContainer/HarmonicLabel"]
+layout_mode = 0
+offset_left = 344.0
+offset_top = 1.0
+offset_right = 412.5625
+offset_bottom = 32.0
+placeholder_text = "1"
 
 [node name="Freq Inputs" type="HBoxContainer" parent="CenterContainer"]
 layout_mode = 2
@@ -84,7 +100,11 @@ layout_mode = 2
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="Harmonic Mode" type="CheckButton" parent="CenterContainer/Freq Inputs"]
+[node name="HarmonicSeriesToggle" type="CheckButton" parent="CenterContainer/Freq Inputs"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="MajorChordToggle" type="CheckButton" parent="CenterContainer/Freq Inputs"]
 unique_name_in_owner = true
 layout_mode = 2
 
@@ -287,10 +307,10 @@ value = 0.25
 anchors_preset = -1
 anchor_right = 0.035
 anchor_bottom = 0.062000003
-offset_left = 23.0
-offset_top = 117.0
-offset_right = 320.68
-offset_bottom = 581.824
+offset_left = -2.0
+offset_top = 118.0
+offset_right = 295.68
+offset_bottom = 582.824
 
 [node name="Button" type="Button" parent="Frequency Buttons"]
 layout_mode = 2
@@ -340,12 +360,14 @@ text = "A0 - 27.5 Hz"
 layout_mode = 2
 text = "A0 - 27.5 Hz"
 
+[connection signal="text_changed" from="CenterContainer/HarmonicLabel/m" to="." method="_on_m_text_changed"]
 [connection signal="text_changed" from="CenterContainer/Freq Inputs/Freq 1" to="." method="_on_freq_1_text_changed"]
 [connection signal="text_changed" from="CenterContainer/Freq Inputs/Freq 2" to="." method="_on_freq_2_text_changed"]
 [connection signal="text_changed" from="CenterContainer/Freq Inputs/Freq 3" to="." method="_on_freq_3_text_changed"]
 [connection signal="text_changed" from="CenterContainer/Freq Inputs/Freq 4" to="." method="_on_freq_4_text_changed"]
 [connection signal="text_changed" from="CenterContainer/Freq Inputs/Freq 5" to="." method="_on_freq_5_text_changed"]
-[connection signal="toggled" from="CenterContainer/Freq Inputs/Harmonic Mode" to="." method="_on_harmonic_mode_toggled"]
+[connection signal="toggled" from="CenterContainer/Freq Inputs/HarmonicSeriesToggle" to="." method="_on_harmonic_mode_toggled"]
+[connection signal="toggled" from="CenterContainer/Freq Inputs/MajorChordToggle" to="." method="_on_major_chord_toggle_toggled"]
 [connection signal="value_changed" from="CenterContainer/Frequency/Frequency1HSlider" to="." method="_on_frequency_h_slider_value_changed"]
 [connection signal="value_changed" from="CenterContainer/Frequency2/Frequency2HSlider" to="." method="_on_frequency_2h_slider_value_changed"]
 [connection signal="value_changed" from="CenterContainer/Frequency3/Frequency3HSlider" to="." method="_on_frequency_3h_slider_value_changed"]

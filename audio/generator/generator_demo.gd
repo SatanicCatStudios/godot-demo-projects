@@ -1,5 +1,14 @@
 extends Node
 
+var m:float = 1
+@onready var slider1 = $"CenterContainer/Frequency/Frequency1HSlider"
+@onready var slider2 = $"CenterContainer/Frequency2/Frequency2HSlider"
+@onready var slider3 = $"CenterContainer/Frequency3/Frequency3HSlider"
+@onready var slider4 = $"CenterContainer/Frequency4/Frequency4HSlider"
+@onready var slider5 = $"CenterContainer/Frequency5/Frequency5HSlider"
+
+
+
 # Keep the number of samples per second to mix low, as GDScript is not super fast. Changing for email commit test
 var sample_hz := 22050.0
 var pulse_hz1 := 440.0
@@ -61,16 +70,29 @@ func _fill_buffer() -> void:
 func _process(_delta: float) -> void:
 	_fill_buffer()
 	if harmSeries == true :
-		%HarmonicLabel.text = "ON"
+		%HarmonicLabel.text = "Harmonic Series"
 		if pulse_hz2 / 2 != pulse_hz1 :
-			pulse_hz2 = pulse_hz1 * 2
-			pulse_hz3 = pulse_hz1 * 3
-			pulse_hz4 = pulse_hz1 * 4
-			pulse_hz5 = pulse_hz1 * 5
+			pulse_hz2 = (pulse_hz1 * m) + pulse_hz1
+			pulse_hz3 = (pulse_hz1 * m) + pulse_hz2
+			pulse_hz4 = (pulse_hz1 * m) + pulse_hz3
+			pulse_hz5 = (pulse_hz1 * m) + pulse_hz4
 		else:
 			pass
+	elif majChord == true :
+		%HarmonicLabel.text = "Major Chord"
+		if (pulse_hz4 / pulse_hz1 != 2 || pulse_hz3 / pulse_hz1 != 1.5) :
+			pulse_hz2 = pulse_hz1 * 1.25 
+			pulse_hz3 = pulse_hz1 * 1.5
+			pulse_hz4 = pulse_hz1 * 2
+			pulse_hz5 = pulse_hz1 * 2.25
 	else:
 		%HarmonicLabel.text = "OFF"
+		
+	slider1.value = pulse_hz1
+	slider2.value = pulse_hz2
+	slider3.value = pulse_hz3
+	slider4.value = pulse_hz4
+	slider5.value = pulse_hz5
 
 
 func _ready() -> void:
@@ -176,6 +198,7 @@ func _on_volume_5h_slider_value_changed(value: float) -> void:
 	%HarmonicLabel.text = "ON"
 
 var harmSeries:bool = false
+var majChord:bool = false
 
 func _on_harmonic_mode_toggled(toggled_on: bool) -> void:
 	if toggled_on == false:
@@ -187,3 +210,11 @@ func _on_harmonic_mode_toggled(toggled_on: bool) -> void:
 
 func _on_button_pressed() -> void:
 	pulse_hz1 = 27.5
+
+
+func _on_m_text_changed(new_text: String) -> void:
+	m = float(new_text)
+
+
+func _on_major_chord_toggle_toggled(toggled_on: bool) -> void:
+	majChord = toggled_on
